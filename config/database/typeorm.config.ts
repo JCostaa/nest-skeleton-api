@@ -9,11 +9,11 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   inject: [ConfigService],
   useFactory: async (): Promise<TypeOrmModuleOptions> => {
     return {
-      type: 'mysql',
+      type: process.env.DB_CONNECTION as 'mysql',
       host: process.env.DB_HOST,
-      port: 3306,
-      username: 'root',
-      database: 'nest',
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      database: process.env.DB_DATABASE,
       password: "",
       entities: [__dirname + '/../../src/**/*.entity.{js,ts}'],
       migrations: [__dirname + '/../../src/infra/database/migrations/*{.ts,.js}'],
@@ -30,11 +30,11 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
 };
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
-  type: 'mysql',
+  type: process.env.DB_CONNECTION as 'mysql',
   host: process.env.DB_HOST,
-  port: 3306,
-  username: 'root',
-  database: 'nest',
+  port: parseInt(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  database: process.env.DB_DATABASE,
   password: "",
   entities: [__dirname + '/../../src/**/*.entity.{js,ts}'],
   migrations: [__dirname + '/../../src/infra/database/migrations/*{.ts,.js}'],

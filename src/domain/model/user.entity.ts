@@ -9,7 +9,9 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
+import {BaseModel} from "./base.entity";
 @Entity({ name: 'users' })
+
 export class User extends BaseEntity {
   @ApiProperty({ description: 'Primary key as User ID', example: 1 })
   @PrimaryGeneratedColumn()

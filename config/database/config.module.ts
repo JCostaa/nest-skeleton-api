@@ -8,9 +8,6 @@ import { typeOrmAsyncConfig } from './typeorm.config';
  * @module
  */
 
-
-
-console.log(process.env.DB_TYPE)
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
