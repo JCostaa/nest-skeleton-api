@@ -1,15 +1,19 @@
-import {EntityRepository, Repository, EntityManager, EntityTarget} from "typeorm";
+import {BaseService} from "./base/base.service";
+import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "../../domain/model/user.entity";
-import {BaseService} from "./base.service";
-import {Injectable} from "@nestjs/common";
-import {UserRepository} from "../../infra/database/repository/user.repository";
+import {Repository} from "typeorm";
+import {BcryptService} from "./auth/bcrypt.service";
 
-@Injectable()
-export class UserService extends BaseService<User>{
-
+export class UserService extends BaseService<User> {
   constructor(
-    private readonly repository: UserRepository){
-    super(repository);
+    @InjectRepository(User) protected readonly repo: Repository<User>,
+    private readonly bcryptService: BcryptService
+  ) {
+    super();
   }
 
+  async save(entity: any): Promise<User> {
+    entity.password = await this.bcryptService.hash(entity.password)
+    return super.save(entity);
+  }
 }

@@ -3,13 +3,13 @@ import {
   BeforeInsert,
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
-import {BaseModel} from "./base.entity";
+import {Token} from "./token.entity";
 @Entity({ name: 'users' })
 
 export class User extends BaseEntity {
@@ -49,4 +49,7 @@ export class User extends BaseEntity {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(password || this.password, salt);
   }
+
+  @OneToMany(type => Token, token => token.user) tokens: Token[];
+
 }
